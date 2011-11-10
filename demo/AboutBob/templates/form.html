@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Node.js WebSocket Demo</title>
+	<link rel="stylesheet" type="text/css" href="/style.css">
+	<script src="/js/underscore-min.js"></script>
+	<script src="/js/jquery.js"></script>
+	<script src="/socket.io/socket.io.js"></script>
+	<script type="text/javascript">
+		io.connect(location.path)
+			.on('data updated', function (data) {
+				if (confirm('Data has been changed. Update?')) {
+					_(data).each(function (value, key) {
+						$('input[name='+key+']').val(value);
+					});
+				}
+			});
+	</script>
+</head>
+<body>
+	<ul id="nav">
+		<li><a href="/">detail view</a></li>
+		<li><a href="/form">form view</a></li>
+	</ul>
+	<div id="view">
+		<form method="POST" action="/form">
+			<div id="name">
+				<label for="name">Name: </label>
+				<input name="name" type="text" value="<%= name %>">
+			</div>
+			<div id="age">
+				<label for="age">Age: </label>
+				<input name="age" type="text" value="<%= age %>">
+			</div>
+			<div id="favorite-color">
+				<label for="favoriteColor">Favorite Color: </label>
+				<input name="favoriteColor" type="text" value="<%= favoriteColor %>">
+			</div>
+			<div id="submit">
+				<input type="submit">
+			</div>
+		</form>
+	</div>
+</body>
+</html>
