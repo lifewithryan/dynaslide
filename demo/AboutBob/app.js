@@ -24,10 +24,7 @@ tubes('/form', 'form').connect()
 tubes('/style.css', 'style').connect()
     .toFileStream('./approot/style.css', 'text/css');
 
-tubes(/^\/js\/(.*)$/, 'js').connect()
-    .toFileStream(function () {
-        return './approot/js/' + this[0];
-    }, 'text/javascript');
+tubes('/static/*', 'static').connect().toDirectory('./approot/');
 
 
 tubes.sendInternetsThru(3000);
